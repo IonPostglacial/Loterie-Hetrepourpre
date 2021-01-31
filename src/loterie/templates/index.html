@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lotterie Pourpre</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <section class="readable">
+        Si pas connecté
+        <h1>Connexion</h1>
+        <form>
+            <label for="username">Nom d'utilisateur</label><input type="text" name="username" id="username">
+            <label for="password">Mot de passe</label><input type="password" name="password" id="password">
+        </form>
+        Si connecté
+        Si un ticket a été pioché :
+        <h1>Ticket en cours</h1>
+        <img src="res/machine-lotterie.png" alt="Machine Lotterie">
+        <p>Description du ticket</p>
+        <button>Remettre dans la machine</button>
+        <section>
+            Sinon :
+            <a class="button" href="choice">Piocher un ticket</a>
+        </section>
+    </section>
+</body>
+</html>

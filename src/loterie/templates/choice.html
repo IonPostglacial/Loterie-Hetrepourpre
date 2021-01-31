@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Choix du ticket</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <form class="readable">
+        <h1>Choix du ticket</h1>
+        <p>Tickets : {{ solved_ticket_count }} résolus sur {{ unsolved_ticket_count }}</p>
+        <section>
+            <h2>Categories</h2>
+            <select>
+                <option>Sprite</option>
+                <option>Code</option>
+                <option>Bruitage</option>
+                <option>Musique</option>
+                <option>Dialogue</option>
+                <option>Fiche Personnage</option>
+            </select>
+        </section>
+        <button type="button">Piocher un ticket</button>
+        <section>
+            <h2>Ticket pioché: Titre du ticket</h2>
+            <img src="res/machine-lotterie.png" alt="Machine Lotterie">
+            <p>
+                Informations sur le ticket
+            </p>
+            <button>Accepter (+ lien vers page d'accueil)</button><button>Remettre dans la machine</button>
+        </section>
+    </form>
+</body>
+</html>
