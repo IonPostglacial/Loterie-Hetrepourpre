@@ -7,9 +7,8 @@ class Category:
 
 @dataclass
 class User:
-    id: int
     login: str
-    password: str
+    password_hash: str
     first_name: str
     last_name: str
 

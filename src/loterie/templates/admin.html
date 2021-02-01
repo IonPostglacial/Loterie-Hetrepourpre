@@ -11,6 +11,13 @@
         <p>
             Bienvenue dans l'administration de la loterie des Hêtres Pourpres.
         </p>
+        <table>
+            <caption>Catégories</caption>
+            <tr><th>Id</th><th>Nom</th></tr>
+            {% for category in categories %}
+                <tr><td>{{ category.id }}</td><td>{{ category.name }}</td></tr>
+            {% endfor %}
+        </table>
     </section>
 </body>
 </html>
