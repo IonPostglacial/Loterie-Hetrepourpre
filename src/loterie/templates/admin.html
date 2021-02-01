@@ -18,6 +18,13 @@
                 <tr><td>{{ category.id }}</td><td>{{ category.name }}</td></tr>
             {% endfor %}
         </table>
+        <table>
+            <caption>Utilisateurs</caption>
+            <tr><th>login</th><th>Prénom</th><th>Nom</th></tr>
+            {% for user in users %}
+                <tr><td>{{ user.login }}</td><td>{{ user.first_name }}</td><td>{{ user.last_name }}</td></tr>
+            {% endfor %}
+        </table>
     </section>
 </body>
 </html>

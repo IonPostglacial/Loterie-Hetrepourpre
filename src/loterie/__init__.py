@@ -1,7 +1,7 @@
 from flask import Flask
 from flask import render_template
 from markupsafe import escape
-from database import get_all_categories
+from database import create_tables, get_all_categories, get_all_users, create_user
 
 import sqlite3
 
@@ -17,16 +17,19 @@ def home_page():
 def admin_page():
     con = sqlite3.connect(DB_FILE)
     cur = con.cursor()
-    
+
+    create_user(cur, "pierre", "hello", "Pierre", "Galipot")
+
     cur.execute("INSERT INTO categories (id, name) VALUES (?, ?)", (1, "Hello"))
     cur.execute("INSERT INTO categories (id, name) VALUES (?, ?)", (2, "Goodbye"))
     cur.execute("INSERT INTO categories (id, name) VALUES (?, ?)", (3, "Mymy"))
 
     categories = [cat for cat in get_all_categories(cur)]
+    users = [user for user in get_all_users(cur)]
 
     cur.close()
     con.close()
-    return render_template('admin.html', categories=categories)
+    return render_template('admin.html', categories=categories, users=users)
 
 @app.route('/choice/')
 def hello_world():
