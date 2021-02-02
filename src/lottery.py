@@ -1,8 +1,9 @@
 from flask import render_template, session, request, redirect, url_for
 from markupsafe import escape
-from database import create_user, check_credentials
 from app import app
 from model import User, Category
+
+import users
 
 
 @app.route('/', methods=["GET", "POST"])
@@ -10,13 +11,14 @@ def home_page():
     url_for('static', filename='style.css')
     return render_template('index.html')
 
+
 @app.route("/login", methods=["GET", "POST"])
 def login_page():
     url_for('static', filename='style.css')
     if request.method == "POST":
         login = request.form['username']
         password = request.form['password']
-        if check_credentials(login, password):
+        if users.check_credentials(login, password):
             session['login'] = login
             return redirect(url_for('home_page'))
         else:
@@ -24,15 +26,17 @@ def login_page():
     else:
         return render_template('login.html')
 
+
 @app.route('/admin', methods=["GET", "POST"])
 def admin_page():
     url_for('static', filename='style.css')
     if 'login' in session:
-        categories = Category.query.all()
-        users = User.query.all()
+        categories = app.session.query(Category).all()
+        users = app.session.query(User).all()
         return render_template('admin.html', categories=categories, users=users)
     else:
         return redirect(url_for('login'))
+
 
 @app.route('/choice', methods=["GET", "POST"])
 def choice_page():

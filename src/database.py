@@ -1,22 +1,10 @@
-from model import Category
-from model import User
-from model import Ticket
-from app import db
-from model import User
-
-from werkzeug.security import generate_password_hash, check_password_hash
+from sqlalchemy import create_engine
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker
 
 
-def create_user(login: str, password: str, first_name: str, last_name: str):
-    return User(
-        login=login,
-        password_hash=generate_password_hash(password),
-        first_name=first_name,
-        last_name=last_name)
+DB_FILE = 'sqlite:///lottery.sq3'
 
-def check_credentials(login: str, password: str):
-    user = User.query.filter_by(login=login).first()
-    if user is not None:
-        return check_password_hash(user.password_hash, password)
-    else:
-        return False
+engine = create_engine(DB_FILE, connect_args={ "check_same_thread": False })
+LocalSession = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+BaseModel = declarative_base()

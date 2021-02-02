@@ -1,10 +1,8 @@
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
+from database import LocalSession
+from sqlalchemy.orm import scoped_session
 
-
-DB_FILE = 'sqlite:///lottery.sq3'
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = DB_FILE
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
-db = SQLAlchemy(app)
+app.session = scoped_session(LocalSession)
