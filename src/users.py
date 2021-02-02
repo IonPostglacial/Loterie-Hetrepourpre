@@ -12,7 +12,7 @@ def create(login: str, password: str, first_name: str, last_name: str):
 
 
 def check_credentials(login: str, password: str):
-    user = app.session.query(User).filter_by(login=login).first()
+    user = User.query.filter_by(login=login).first()
     if user is not None:
         return check_password_hash(user.password_hash, password)
     else:

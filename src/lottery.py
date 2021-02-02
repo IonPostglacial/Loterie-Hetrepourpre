@@ -31,8 +31,8 @@ def login_page():
 def admin_page():
     url_for('static', filename='style.css')
     if 'login' in session:
-        categories = app.session.query(Category).all()
-        users = app.session.query(User).all()
+        categories = Category.query.all()
+        users = User.query.all()
         return render_template('admin.html', categories=categories, users=users)
     else:
         return redirect(url_for('login_page'))
