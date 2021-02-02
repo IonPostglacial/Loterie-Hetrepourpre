@@ -35,7 +35,7 @@ def admin_page():
         users = app.session.query(User).all()
         return render_template('admin.html', categories=categories, users=users)
     else:
-        return redirect(url_for('login'))
+        return redirect(url_for('login_page'))
 
 
 @app.route('/choice', methods=["GET", "POST"])
