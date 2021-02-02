@@ -1,21 +1,17 @@
-from database import create_tables, create_user
+from database import create_user
+from app import db
+from model import Category
 
-import sqlite3
 
-conn = sqlite3.connect("lottery.sq3")
-curs = conn.cursor()
+db.create_all()
 
-create_tables(curs)
+db.session.add(Category(id=1, name="Sprite"))
+db.session.add(Category(id=2, name="Code"))
+db.session.add(Category(id=3, name="Bruitage"))
+db.session.add(Category(id=4, name="Musique"))
+db.session.add(Category(id=5, name="Dialogue"))
+db.session.add(Category(id=6, name="Fiche Personnage"))
 
-curs.execute("INSERT INTO categories (id, name) VALUES (?, ?)", (1, "Sprite"))
-curs.execute("INSERT INTO categories (id, name) VALUES (?, ?)", (2, "Code"))
-curs.execute("INSERT INTO categories (id, name) VALUES (?, ?)", (3, "Bruitage"))
-curs.execute("INSERT INTO categories (id, name) VALUES (?, ?)", (4, "Musique"))
-curs.execute("INSERT INTO categories (id, name) VALUES (?, ?)", (5, "Dialogue"))
-curs.execute("INSERT INTO categories (id, name) VALUES (?, ?)", (6, "Fiche Personnage"))
+db.session.add(create_user("pierre", "hello", "Pierre", "Galipot"))
 
-create_user(curs, "pierre", "hello", "Pierre", "Galipot")
-
-curs.close()
-conn.commit()
-conn.close()
+db.session.commit()

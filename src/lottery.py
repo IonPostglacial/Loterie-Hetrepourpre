@@ -1,13 +1,9 @@
-from flask import Flask, render_template, session, request, redirect, url_for
+from flask import render_template, session, request, redirect, url_for
 from markupsafe import escape
-from database import create_tables, get_all_categories, get_all_users, create_user, check_credentials
+from database import create_user, check_credentials
+from app import app
+from model import User, Category
 
-import sqlite3
-
-DB_FILE = 'lottery.sq3'
-
-app = Flask(__name__)
-app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 
 @app.route('/', methods=["GET", "POST"])
 def home_page():
@@ -20,9 +16,7 @@ def login_page():
     if request.method == "POST":
         login = request.form['username']
         password = request.form['password']
-        con = sqlite3.connect(DB_FILE)
-        cur = con.cursor()
-        if check_credentials(cur, login, password):
+        if check_credentials(login, password):
             session['login'] = login
             return redirect(url_for('home_page'))
         else:
@@ -34,14 +28,8 @@ def login_page():
 def admin_page():
     url_for('static', filename='style.css')
     if 'login' in session:
-        con = sqlite3.connect(DB_FILE)
-        cur = con.cursor()
-
-        categories = [cat for cat in get_all_categories(cur)]
-        users = [user for user in get_all_users(cur)]
-
-        cur.close()
-        con.close()
+        categories = Category.query.all()
+        users = User.query.all()
         return render_template('admin.html', categories=categories, users=users)
     else:
         return redirect(url_for('login'))
