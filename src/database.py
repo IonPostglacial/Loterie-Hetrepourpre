@@ -47,16 +47,16 @@ def get_all_categories(cursor):
         yield Category(name=line[0], id=line[1])
 
 def get_all_users(cursor):
-    cursor.execute('SELECT login, pwdhash, first_name, last_name FROM users')
+    cursor.execute('SELECT login, pwdhash, first_name, last_name FROM users;')
     while (line := cursor.fetchone()) != None:
         yield User(login=line[0], password_hash=line[1], first_name=line[2], last_name=line[3])
 
 def create_user(cursor, login: str, password: str, first_name: str, last_name: str):
-    cursor.execute('INSERT INTO Users (login, pwdhash, first_name, last_name) VALUES (?, ?, ?, ?)',
+    cursor.execute('INSERT INTO Users (login, pwdhash, first_name, last_name) VALUES (?, ?, ?, ?);',
         (login, generate_password_hash(password), first_name, last_name))
 
 def check_credentials(cursor, login: str, password: str):
-    cursor.execute('SELECT pwdhash FROM users WHERE login = ?', (login))
+    cursor.execute('SELECT pwdhash FROM users WHERE login = ?;', (login,))
     saved_creds = cursor.fetchone()
     if saved_creds is not None:
         return check_password_hash(saved_creds[0], password)
