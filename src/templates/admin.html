@@ -20,9 +20,7 @@
                     <tr>
                         <td>{{ category.id }}</td>
                         <td>
-                            <input type="text"
-                                name="category-name-{{ category.id }}"
-                                value="{{ category.name }}">
+                            {{ category.name }}
                         </td>
                         <td>
                             <button name="delete-category" value="{{ category.id }}">Supprimer</button>
@@ -40,10 +38,10 @@
                 <tr><th>login</th><th>Password</th><th>Prénom</th><th>Nom</th><th></th></tr>
                 {% for user in users %}
                     <tr>
-                        <td><input type="text" value="{{ user.login }}"></td>
-                        <td><input readonly type="text" value="******"></td>
-                        <td><input type="text" value="{{ user.first_name }}"></td>
-                        <td><input type="text" value="{{ user.last_name }}"></td>
+                        <td>{{ user.login }}</td>
+                        <td>******</td>
+                        <td>{{ user.first_name }}</td>
+                        <td>{{ user.last_name }}</td>
                         <td><button name="delete-user" value="{{ user.login }}">Supprimer</button></td>
                     </tr>
                 {% endfor %}
