@@ -6,7 +6,7 @@ from database import BaseModel
 class Category(BaseModel):
     __tablename__ = "Categories"
 
-    id = Column(Integer, primary_key=True)
+    id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String(256), nullable=False)
 
 
