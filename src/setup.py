@@ -15,7 +15,7 @@ db.add(Category(name="Musique"))
 db.add(Category(name="Dialogue"))
 db.add(Category(name="Fiche Personnage"))
 
-db.add(users.create("pierre", "hello", "Pierre", "Galipot"))
+db.add(users.create("pierre", "hello", "Pierre", "Galipot", True))
 
 db.commit()
 db.close()

@@ -35,13 +35,14 @@
             </table>
             <table>
                 <caption>Utilisateurs</caption>
-                <tr><th>login</th><th>Password</th><th>Prénom</th><th>Nom</th><th></th></tr>
+                <tr><th>login</th><th>Password</th><th>Prénom</th><th>Nom</th><th>Administrateur</th><th></th></tr>
                 {% for user in users %}
                     <tr>
                         <td>{{ user.login }}</td>
                         <td>******</td>
                         <td>{{ user.first_name }}</td>
                         <td>{{ user.last_name }}</td>
+                        <td>{% if user.is_admin %} oui {% else %} non {% endif %}</td>
                         <td><button name="delete-user" value="{{ user.login }}">Supprimer</button></td>
                     </tr>
                 {% endfor %}
@@ -50,6 +51,7 @@
                     <td><input type="password" name="user-password"></td>
                     <td><input type="text" name="user-first-name"></td>
                     <td><input type="text" name="user-last-name"></td>
+                    <td><input type="checkbox" name="user-is-admin"></td>
                     <td><button name="add-user" value="1">Ajouter</button></td>
                 </tr>
             </table>

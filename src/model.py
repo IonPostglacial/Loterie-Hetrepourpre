@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy import Column, Integer, String, ForeignKey, Boolean
 from sqlalchemy.orm import relationship, backref
 from database import BaseModel
 
@@ -17,6 +17,7 @@ class User(BaseModel):
     password_hash = Column(String())
     first_name = Column(String(256), nullable=False)
     last_name = Column(String(256), nullable=False)
+    is_admin = Column(Boolean(), nullable=False)
 
 
 class Ticket(BaseModel):

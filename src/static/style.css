@@ -48,3 +48,24 @@ form.readable {
     margin-left: auto;
     margin-right: auto;
 }
+
+table {
+    border-collapse: collapse;
+}
+
+table caption {
+    font-size: 1.2em;
+    border-bottom: 2px solid #cc2323;
+    margin: 0.5ch;
+    padding: 0.5ch;
+}
+
+table td,
+table th {
+    border: 1px solid black;
+    padding: 0.5ch;
+}
+
+table th {
+    background-color:#f1f2f3;
+}

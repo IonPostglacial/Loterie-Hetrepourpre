@@ -32,6 +32,12 @@ def login_page():
 def admin_page():
     url_for('static', filename='style.css')
     if 'login' in session:
+        current_user = User.query.filter_by(login=session['login']).first()
+        is_admin = False
+        if current_user is not None:
+            is_admin = current_user.is_admin
+        if not is_admin:
+            redirect(use_for('login_page'))
         all_categories = Category.query.all()
         all_users = User.query.all()
         if request.method == "POST":
@@ -46,7 +52,8 @@ def admin_page():
                     request.form["user-login"], 
                     request.form["user-password"], 
                     request.form["user-first-name"],
-                    request.form["user-last-name"])
+                    request.form["user-last-name"],
+                    "user-is-admin" in request.form)
                 all_users.append(user)
                 database.session.add(user)
             elif "delete-user" in request.form:
