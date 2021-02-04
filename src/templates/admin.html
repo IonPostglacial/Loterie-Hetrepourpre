@@ -8,44 +8,62 @@
 </head>
 <body>
     <section class="readable">
+        <form action="/admin" method="POST">
         <h1>Administration</h1>
         <p>
             Bienvenue dans l'administration de la loterie des Hêtres Pourpres.
         </p>
-        <table>
-            <caption>Catégories</caption>
-            <tr><th>Id</th><th>Nom</th><th></th></tr>
-            {% for category in categories %}
+            <table>
+                <caption>Catégories</caption>
+                <tr><th>Id</th><th>Nom</th><th></th></tr>
+                {% for category in categories %}
+                    <tr>
+                        <td>{{ category.id }}</td>
+                        <td>
+                            {{ category.name }}
+                        </td>
+                        <td>                            
+                            <a href="admin/tickets/new/{{ category.id }}" class="button">
+                                Nouveau ticket
+                            </a>
+                            <button name="delete-category" value="{{ category.id }}">Supprimer</button>
+                        </td>
+                    </tr>
+                {% endfor %}
                 <tr>
-                    <td>{{ category.id }}</td>
-                    <td><input type="text" value="{{ category.name }}"></td>
-                    <td><button>Supprimer</button></td>
+                    <td></td>
+                    <td><input type="text" name="category-name"></td>
+                    <td>
+                        <button name="add-category" value="1">Ajouter</button>
+                    </td>
                 </tr>
-            {% endfor %}
-            <tr>
-                <td></td>
-                <td><input type="text"></td>
-                <td><button>Ajouter</button></td>
-            </tr>
-        </table>
-        <table>
-            <caption>Utilisateurs</caption>
-            <tr><th>login</th><th>Prénom</th><th>Nom</th><th></th></tr>
-            {% for user in users %}
+            </table>
+            <table>
+                <caption>Utilisateurs</caption>
+                <tr><th>login</th><th>Password</th><th>Prénom</th><th>Nom</th><th>Administrateur</th><th></th></tr>
+                {% for user in users %}
+                    <tr>
+                        <td>{{ user.login }}</td>
+                        <td>******</td>
+                        <td>{{ user.first_name }}</td>
+                        <td>{{ user.last_name }}</td>
+                        <td>{% if user.is_admin %} oui {% else %} non {% endif %}</td>
+                        <td><button name="delete-user" value="{{ user.login }}">Supprimer</button></td>
+                    </tr>
+                {% endfor %}
                 <tr>
-                    <td><input type="text" value="{{ user.login }}"></td>
-                    <td><input type="text" value="{{ user.first_name }}"></td>
-                    <td><input type="text" value="{{ user.last_name }}"></td>
-                    <td><button>Supprimer</button></td>
+                    <td><input type="text" name="user-login"></td>
+                    <td><input type="password" name="user-password"></td>
+                    <td><input type="text" name="user-first-name"></td>
+                    <td><input type="text" name="user-last-name"></td>
+                    <td><input type="checkbox" name="user-is-admin"></td>
+                    <td><button name="add-user" value="1">Ajouter</button></td>
                 </tr>
-            {% endfor %}
-            <tr>
-                <td><input type="text"></td>
-                <td><input type="text"></td>
-                <td><input type="text"></td>
-                <td><button>Ajouter</button></td>
-            </tr>
-        </table>
+            </table>
+            <h2>Tickets</h2>
+            <a href="/admin/tickets/new" class="button">Créer un nouveau ticket</a>
+            <a href="/admin/tickets/list" class="button">Liste des tickets</a>
+        </form>
     </section>
 </body>
 </html>

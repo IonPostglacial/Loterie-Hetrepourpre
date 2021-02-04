@@ -11,8 +11,13 @@ body {
     box-sizing: border-box;
 }
 
+h1 {
+    text-align: center;
+}
+
 button,
 .button {
+    font-size: 1em;
     border: 2px solid black;
     background-color: #1ba2d7;
     text-shadow: 1px 1px 0px black;
@@ -33,7 +38,9 @@ button:active,
 }
 
 input,
-textarea {
+textarea,
+select {
+    font-size: 1em;
     border: 1px solid black;
     padding: 1ch;
 }
@@ -47,4 +54,34 @@ form.readable {
     max-width: 100ch;
     margin-left: auto;
     margin-right: auto;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+caption {
+    font-size: 1.2em;
+    margin: 0.5ch;
+    padding: 0.5ch;
+}
+
+h1, h2, h3, h4, h5, caption {
+    border-bottom: 2px solid #cc2323;
+}
+
+table td,
+table th {
+    border: 1px solid black;
+    padding: 0.5ch;
+}
+
+table th {
+    background-color:#f1f2f3;
+}
+
+.grid-form {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    gap: 1ch;
 }

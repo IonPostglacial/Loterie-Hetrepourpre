@@ -8,14 +8,14 @@ db = LocalSession()
 
 BaseModel.metadata.create_all(bind=engine)
 
-db.add(Category(id=1, name="Sprite"))
-db.add(Category(id=2, name="Code"))
-db.add(Category(id=3, name="Bruitage"))
-db.add(Category(id=4, name="Musique"))
-db.add(Category(id=5, name="Dialogue"))
-db.add(Category(id=6, name="Fiche Personnage"))
+db.add(Category(name="Sprite"))
+db.add(Category(name="Code"))
+db.add(Category(name="Bruitage"))
+db.add(Category(name="Musique"))
+db.add(Category(name="Dialogue"))
+db.add(Category(name="Fiche Personnage"))
 
-db.add(users.create("pierre", "hello", "Pierre", "Galipot"))
+db.add(users.create("pierre", "hello", "Pierre", "Galipot", True))
 
 db.commit()
 db.close()
