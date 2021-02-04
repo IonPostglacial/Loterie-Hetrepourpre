@@ -30,3 +30,4 @@ class Ticket(BaseModel):
     category = relationship(Category, backref=backref('tickets', lazy=True))
     owner_login = Column(Integer, ForeignKey('Users.login'), nullable=True)
     owner = relationship(User, backref=backref('tickets', lazy=True))
+    is_treated = Column(Boolean(), nullable=False)

@@ -37,7 +37,14 @@ def admins_only(f):
 @connected_only
 def home_page():
     url_for('static', filename='style.css')
-    return render_template('index.html')
+    current_user = User.query.filter_by(login=session['login']).first()
+    owned_ticket = Ticket.query.filter_by(owner=current_user).first()
+    if owned_ticket is None:
+        solved_count = database.session.query(Ticket.id).filter_by(is_treated=True).count()
+        ticket_count = database.session.query(Ticket.id).count()
+        return render_template('choice.html', solved_ticket_count=solved_count, unsolved_ticket_count=ticket_count)
+    else:
+        return render_template('index.html', user=current_user, ticket=owned_ticket)
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -94,7 +101,8 @@ def create_ticket(category_id: int = None):
                 category_id=request.form['ticket-category'],
                 owner_login=request.form['ticket-owner'],
                 name=request.form['ticket-name'],
-                description=request.form['ticket-description'])
+                description=request.form['ticket-description'],
+                is_treated=False)
             database.session.add(new_ticket)
             database.session.commit()
             return redirect(url_for('list_tickets'))
@@ -115,10 +123,3 @@ def create_ticket(category_id: int = None):
 def list_tickets():
     all_categories = Category.query.all()
     return render_template('tickets.html', categories=all_categories)
-
-
-@app.route('/choice', methods=["GET", "POST"])
-@connected_only
-def choice_page():
-    url_for('static', filename='style.css')
-    return render_template('choice.html', solved_ticket_count=13, unsolved_ticket_count=25)
