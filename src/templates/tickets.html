@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liste des tickets</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <h1>Liste des tickets</h1>
+    <a href="/admin" class="button">Retour à l'administration</a>
+    {% for category in categories %}
+    <section class="readable">
+        <table>
+            <caption>{{ category.name }}</caption>
+            <tr>
+                <th>#</th><th>Nom</th><th>Possesseur</th>
+            </tr>
+            {% for ticket in category.tickets %}
+            <tr>
+                <td>{{ ticket.id }}</td>
+                <td>{{ ticket.name }}</td>
+                <td>{{ ticket.owner.first_name }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </section>
+    {% endfor %}
+</body>
+</html>

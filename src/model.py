@@ -23,7 +23,7 @@ class User(BaseModel):
 class Ticket(BaseModel):
     __tablename__ = "Ticket"
 
-    id = Column(Integer, primary_key=True)
+    id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String(256), nullable=False)
     description = Column(String(1024), nullable=False)
     category_id = Column(Integer, ForeignKey('Categories.id'), nullable=False)

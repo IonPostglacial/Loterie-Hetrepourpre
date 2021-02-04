@@ -22,7 +22,10 @@
                         <td>
                             {{ category.name }}
                         </td>
-                        <td>
+                        <td>                            
+                            <a href="admin/tickets/new/{{ category.id }}" class="button">
+                                Nouveau ticket
+                            </a>
                             <button name="delete-category" value="{{ category.id }}">Supprimer</button>
                         </td>
                     </tr>
@@ -30,7 +33,9 @@
                 <tr>
                     <td></td>
                     <td><input type="text" name="category-name"></td>
-                    <td><button name="add-category" value="1">Ajouter</button></td>
+                    <td>
+                        <button name="add-category" value="1">Ajouter</button>
+                    </td>
                 </tr>
             </table>
             <table>
@@ -55,6 +60,9 @@
                     <td><button name="add-user" value="1">Ajouter</button></td>
                 </tr>
             </table>
+            <h2>Tickets</h2>
+            <a href="/admin/tickets/new" class="button">Créer un nouveau ticket</a>
+            <a href="/admin/tickets/list" class="button">Liste des tickets</a>
         </form>
     </section>
 </body>

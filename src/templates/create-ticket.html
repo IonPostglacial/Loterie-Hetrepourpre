@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Créer un ticket</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <h1>Créer un ticket</h1>
+    <a href="/admin" class="button">Retour à l'administration</a>
+    <form action="" method="POST" class="grid-form readable">
+        <label for="ticket-category">Catégorie</label>
+        <select name="ticket-category" id="ticket-category" value="{{ selected_category.id }}">
+            {% for category in categories %}
+            <option value="{{ category.id }}">{{ category.name }}</option>
+            {% endfor %}
+        </select>
+        <label for="ticket-name">Nom</label>
+        <input type="text" name="ticket-name" id="ticket-name">
+        <label for="ticket-description">Description</label>
+        <textarea name="ticket-description" id="ticket-description" cols="30" rows="10"></textarea>
+        <label for="ticket-owner">Détenteur</label>
+        <select name="ticket-owner" id="ticket-owner">
+            <option value="">&nbsp;</option>
+            {% for user in users %}
+            <option value="{{ user.login }}">{{ user.first_name }}</option>
+            {% endfor %}
+        </select>
+        <button name="btn-save" value="1">Enregistrer</button>
+    </form>
+</body>
+</html>
