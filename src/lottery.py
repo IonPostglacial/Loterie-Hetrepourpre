@@ -2,10 +2,12 @@ from flask import render_template, session, request, redirect, url_for
 from markupsafe import escape
 from app import app
 from model import User, Category, Ticket
+from sqlalchemy import and_
 
 import users
 import database
 import functools
+import random
 
 
 def connected_only(f):
@@ -36,13 +38,45 @@ def admins_only(f):
 @app.route('/', methods=["GET", "POST"])
 @connected_only
 def home_page():
+    if request.method == "POST":
+        if 'pick-ticket' in request.form:
+            available_tickets = Ticket.query.filter(and_(Ticket.owner_login == "", Ticket.category_id == int(request.form['ticket-category']))).all()
+            if len(available_tickets) > 0:
+                picked_ticket_index = random.randint(0, len(available_tickets) - 1)
+                picked_ticket = available_tickets[picked_ticket_index]
+            else:
+                picked_ticket = None
+        elif 'accept-ticket' in request.form:  
+            picked_ticket = database.session.query(Ticket).get(int(request.form['accept-ticket']))
+            picked_ticket.owner = database.session.query(User).get(session['login'])
+            database.session.commit()
+            return redirect(url_for('home_page'))
+        elif 'unpick-ticket' in request.form:
+            picked_ticket = database.session.query(Ticket).get(int(request.form['unpick-ticket']))
+            picked_ticket.owner = None
+            database.session.commit()
+            return redirect(url_for('home_page'))
+        elif 'resolve-ticket' in request.form:
+            picked_ticket = database.session.query(Ticket).get(int(request.form['resolve-ticket']))
+            picked_ticket.is_treated = True
+            database.session.commit()
+            return redirect(url_for('home_page'))
+        else:
+            picked_ticket = None
+    else:
+        picked_ticket = None
     url_for('static', filename='style.css')
     current_user = User.query.filter_by(login=session['login']).first()
-    owned_ticket = Ticket.query.filter_by(owner=current_user).first()
+    owned_ticket = Ticket.query.filter(and_(Ticket.is_treated == False, Ticket.owner == current_user)).first()
     if owned_ticket is None:
         solved_count = database.session.query(Ticket.id).filter_by(is_treated=True).count()
         ticket_count = database.session.query(Ticket.id).count()
-        return render_template('choice.html', solved_ticket_count=solved_count, unsolved_ticket_count=ticket_count)
+        all_categories = Category.query.all()
+        return render_template('choice.html',
+            solved_ticket_count=solved_count,
+            unsolved_ticket_count=ticket_count,
+            picked_ticket=picked_ticket,
+            categories=all_categories)
     else:
         return render_template('index.html', user=current_user, ticket=owned_ticket)
 
