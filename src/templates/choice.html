@@ -7,11 +7,12 @@
     <link rel="stylesheet" href="static/style.css">
 </head>
 <body>
+    {% include 'header.html' %}
     <form action="" class="readable" method="POST">
-        <h1>Choix du ticket</h1>
+        <h2>Choix du ticket</h2>
         <p>Tickets : {{ solved_ticket_count }} résolus sur {{ unsolved_ticket_count }}</p>
         <section>
-            <h2>Categories</h2>
+            <h3>Categories</h3>
             <select name="ticket-category">
                 {% for category in categories %}
                 <option value="{{ category.id }}">{{ category.name }}</option>
@@ -22,10 +23,13 @@
         <button name="pick-ticket" value="1">Piocher un ticket</button>
         {% else %}
         <section>
-            <h2>Ticket pioché: {{ picked_ticket.name }}</h2>
+            <h3>Ticket pioché: {{ picked_ticket.name }}</h3>
             <p>{{ picked_ticket.description }}</p>
             <button name="accept-ticket" value="{{ picked_ticket.id }}">Accepter</button><button>Remettre dans la machine</button>
         </section>
+        {% endif %}
+        {% if not is_ticket_available %}
+        <p>Désolé, il n'y a pas de tickets disponibles dans la catégorie sélectionnée.</p>
         {% endif %}
     </form>
 </body>

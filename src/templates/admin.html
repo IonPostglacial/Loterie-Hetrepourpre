@@ -7,9 +7,10 @@
     <link rel="stylesheet" href="static/style.css">
 </head>
 <body>
+    {% include 'header.html' %}
     <section class="readable">
         <form action="/admin" method="POST">
-        <h1>Administration</h1>
+        <h2>Administration</h2>
         <p>
             Bienvenue dans l'administration de la loterie des Hêtres Pourpres.
         </p>
@@ -60,7 +61,7 @@
                     <td><button name="add-user" value="1">Ajouter</button></td>
                 </tr>
             </table>
-            <h2>Tickets</h2>
+            <h3>Tickets</h3>
             <a href="/admin/tickets/new" class="button">Créer un nouveau ticket</a>
             <a href="/admin/tickets/list" class="button">Liste des tickets</a>
         </form>

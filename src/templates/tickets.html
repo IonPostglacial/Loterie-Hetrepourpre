@@ -7,8 +7,8 @@
     <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-    <h1>Liste des tickets</h1>
-    <a href="/admin" class="button">Retour à l'administration</a>
+    {% include 'header.html' %}
+    <h2>Liste des tickets</h2>
     {% for category in categories %}
     <section class="readable">
         <table>

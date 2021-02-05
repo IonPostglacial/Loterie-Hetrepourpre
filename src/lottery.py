@@ -14,6 +14,8 @@ def connected_only(f):
     @functools.wraps(f)
     def connected_only_fn(*args, **kwargs):
         if 'login' in session:
+            url_for('static', filename='style.css')
+            url_for('static', filename='machine-lotterie.png')
             return f(*args, **kwargs)
         else:
             return redirect(url_for('login_page'))
@@ -38,6 +40,7 @@ def admins_only(f):
 @app.route('/', methods=["GET", "POST"])
 @connected_only
 def home_page():
+    is_ticket_available = True
     if request.method == "POST":
         if 'pick-ticket' in request.form:
             available_tickets = Ticket.query.filter(and_(Ticket.owner_login == "", Ticket.category_id == int(request.form['ticket-category']))).all()
@@ -45,6 +48,7 @@ def home_page():
                 picked_ticket_index = random.randint(0, len(available_tickets) - 1)
                 picked_ticket = available_tickets[picked_ticket_index]
             else:
+                is_ticket_available = False
                 picked_ticket = None
         elif 'accept-ticket' in request.form:  
             picked_ticket = database.session.query(Ticket).get(int(request.form['accept-ticket']))
@@ -65,7 +69,6 @@ def home_page():
             picked_ticket = None
     else:
         picked_ticket = None
-    url_for('static', filename='style.css')
     current_user = User.query.filter_by(login=session['login']).first()
     owned_ticket = Ticket.query.filter(and_(Ticket.is_treated == False, Ticket.owner == current_user)).first()
     if owned_ticket is None:
@@ -76,9 +79,11 @@ def home_page():
             solved_ticket_count=solved_count,
             unsolved_ticket_count=ticket_count,
             picked_ticket=picked_ticket,
-            categories=all_categories)
+            categories=all_categories,
+            is_ticket_available=is_ticket_available,
+            is_admin=current_user.is_admin)
     else:
-        return render_template('index.html', user=current_user, ticket=owned_ticket)
+        return render_template('index.html', user=current_user, ticket=owned_ticket, is_admin=current_user.is_admin)
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -121,7 +126,7 @@ def admin_page():
         elif "delete-user" in request.form:
             User.query.filter_by(login=request.form["delete-user"]).delete()
         database.session.commit()
-    return render_template('admin.html', categories=all_categories, users=all_users)
+    return render_template('admin.html', categories=all_categories, users=all_users, is_admin=True)
 
 
 @app.route('/admin/tickets/new', methods=['GET', 'POST'])
@@ -149,11 +154,12 @@ def create_ticket(category_id: int = None):
     return render_template('create-ticket.html',
         categories=all_categories,
         users=all_users,
-        selected_category=selected_category)
+        selected_category=selected_category,
+        is_admin=True)
 
 
 @app.route('/admin/tickets/list', methods=['GET'])
 @admins_only
 def list_tickets():
     all_categories = Category.query.all()
-    return render_template('tickets.html', categories=all_categories)
+    return render_template('tickets.html', categories=all_categories, is_admin=True)
