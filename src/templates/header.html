@@ -1,7 +1,10 @@
 <header class="flexbox">
-    <a href="/"><img src="static/machine-lotterie.png" alt="La loterie des hêtres pourpres"></a>
-    <h1>La loterie des hêtres pourpres</h1>
+    <a href="/"><img src="/static/machine-lotterie.png" alt="Machine à loterie"></a>
+    <h1>La loterie des êtres pourpres</h1>
     {% if is_admin %}
-    <a href="/admin" class="button">Administration</a>
+    <div class="flexbox">
+        <a href="/disconnect" class="button">Se déconnecter</a>
+        <a href="/admin" class="button">Administration</a>
+    </div>
     {% endif %}
 </header>

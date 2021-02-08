@@ -23,6 +23,7 @@
         <button name="pick-ticket" value="1">Piocher un ticket</button>
         {% else %}
         <section>
+            <img src="/static/ticket.png" alt="Ticket de loterie">
             <h3>Ticket pioché: {{ picked_ticket.name }}</h3>
             <p>{{ picked_ticket.description }}</p>
             <button name="accept-ticket" value="{{ picked_ticket.id }}">Accepter</button><button>Remettre dans la machine</button>

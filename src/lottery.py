@@ -86,6 +86,12 @@ def home_page():
         return render_template('index.html', user=current_user, ticket=owned_ticket, is_admin=current_user.is_admin)
 
 
+@app.route('/disconnect')
+def disconnect_page():
+    del session['login']
+    return redirect(url_for('login_page'))
+
+
 @app.route("/login", methods=["GET", "POST"])
 def login_page():
     url_for('static', filename='style.css')

@@ -8,24 +8,26 @@
 </head>
 <body>
     {% include 'header.html' %}
-    <h2>Liste des tickets</h2>
-    {% for category in categories %}
     <section class="readable">
-        <table>
-            <caption>{{ category.name }}</caption>
-            <tr>
-                <th>#</th><th>Nom</th><th>Possesseur</th><th>Traité</th>
-            </tr>
-            {% for ticket in category.tickets %}
-            <tr>
-                <td>{{ ticket.id }}</td>
-                <td>{{ ticket.name }}</td>
-                <td>{{ ticket.owner.first_name }}</td>
-                <td class="centered-text">{% if ticket.is_treated %} oui {% else %} non {% endif %}</td>
-            </tr>
-            {% endfor %}
-        </table>
+        <h2>Liste des tickets</h2>
+        {% for category in categories %}
+        <section>
+            <table>
+                <caption>{{ category.name }}</caption>
+                <tr>
+                    <th>#</th><th>Nom</th><th>Possesseur</th><th>Traité</th>
+                </tr>
+                {% for ticket in category.tickets %}
+                <tr>
+                    <td>{{ ticket.id }}</td>
+                    <td>{{ ticket.name }}</td>
+                    <td>{{ ticket.owner.first_name }}</td>
+                    <td class="centered-text">{% if ticket.is_treated %} oui {% else %} non {% endif %}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </section>
+        {% endfor %}
     </section>
-    {% endfor %}
 </body>
 </html>
