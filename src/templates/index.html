@@ -8,11 +8,19 @@
 </head>
 <body>
     {% include 'header.html' %}
-    <form action="" method="POST" class="readable">
-        <h2>{{ ticket.name }}</h2>
-        <p>{{ ticket.description }}</p>
-        <button name="unpick-ticket" value="{{ ticket.id }}">Remettre le ticket dans la machine</button>
-        <button name="resolve-ticket" value="{{ ticket.id }}">Marquer le ticket comme résolu</button>
-    </form>
+    <section class="readable">
+        <form action="" method="POST" class="ticket">
+            <div class="ticket-box">
+                <div class="vertical-text bottom-up">{{ '%07d' % ticket.id }}</div>
+                <div class="ticket-main">
+                    <h3>{{ ticket.name }}</h3>
+                    <p>{{ ticket.description }}</p>
+                </div>
+                <div class="vertical-text">{{ '%07d' % ticket.id }}</div>
+            </div>
+            <button name="unpick-ticket" value="{{ ticket.id }}">Remettre le ticket dans la machine</button>
+            <button name="resolve-ticket" value="{{ ticket.id }}">Marquer le ticket comme résolu</button>
+        </form>
+    </section>
 </body>
 </html>

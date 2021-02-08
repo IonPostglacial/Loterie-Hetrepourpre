@@ -112,3 +112,42 @@ h1 {
 	align-items: start;
 	justify-content: space-between;
 }
+
+.ticket {
+    display: inline-block;
+    border-width: 2px;
+    border-color: #b57c60;
+    border-style: solid dotted;
+    font-family: 'Courier New', Courier, monospace;
+    background-color: #fff0de;
+    margin: 1ch;
+    padding: 2ch;
+    box-shadow: 0ch 0ch 2ch rgba(0, 0, 0, 0.2);
+}
+
+.ticket-box > div {
+    border: 2px solid #b57c60;
+    padding: 2px;
+    text-align: center;
+}
+
+.ticket-box {
+    display: flex;
+    gap: 1ch;
+    grid-template-columns: 2ch auto 2ch;
+    grid-template-rows: 2ch auto;
+    margin-bottom: 1ch;
+}
+
+.ticket-main {
+    flex: 1;
+    color: #b57c60;
+}
+
+.vertical-text {
+    writing-mode: vertical-lr;
+}
+
+.vertical-text.bottom-up {
+    transform: rotate(180deg);
+}

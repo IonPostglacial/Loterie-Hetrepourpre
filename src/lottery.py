@@ -4,10 +4,11 @@ from app import app
 from model import User, Category, Ticket
 from sqlalchemy import and_
 
-import users
 import database
 import functools
+import html
 import random
+import users
 
 
 def connected_only(f):
@@ -146,7 +147,7 @@ def create_ticket(category_id: int = None):
                 category_id=request.form['ticket-category'],
                 owner_login=request.form['ticket-owner'],
                 name=request.form['ticket-name'],
-                description=request.form['ticket-description'],
+                description=html.escape(request.form['ticket-description']),
                 is_treated=False)
             database.session.add(new_ticket)
             database.session.commit()
@@ -164,8 +165,12 @@ def create_ticket(category_id: int = None):
         is_admin=True)
 
 
-@app.route('/admin/tickets/list', methods=['GET'])
+@app.route('/admin/tickets/list', methods=['GET', 'POST'])
 @admins_only
 def list_tickets():
+    if request.method == "POST":
+        if "delete-ticket" in request.form:
+            Ticket.query.filter_by(id=int(request.form["delete-ticket"])).delete()
+            database.session.commit()
     all_categories = Category.query.all()
     return render_template('tickets.html', categories=all_categories, is_admin=True)

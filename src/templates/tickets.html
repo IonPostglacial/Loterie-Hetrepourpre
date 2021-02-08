@@ -8,14 +8,14 @@
 </head>
 <body>
     {% include 'header.html' %}
-    <section class="readable">
+    <form action="" method="POST" class="readable">
         <h2>Liste des tickets</h2>
         {% for category in categories %}
         <section>
             <table>
                 <caption>{{ category.name }}</caption>
                 <tr>
-                    <th>#</th><th>Nom</th><th>Possesseur</th><th>Traité</th>
+                    <th>#</th><th>Nom</th><th>Possesseur</th><th>Traité</th><th></th>
                 </tr>
                 {% for ticket in category.tickets %}
                 <tr>
@@ -23,11 +23,12 @@
                     <td>{{ ticket.name }}</td>
                     <td>{{ ticket.owner.first_name }}</td>
                     <td class="centered-text">{% if ticket.is_treated %} oui {% else %} non {% endif %}</td>
+                    <td><button name="delete-ticket" value="{{ ticket.id }}">Supprimer</button></td>
                 </tr>
                 {% endfor %}
             </table>
         </section>
         {% endfor %}
-    </section>
+    </form>
 </body>
 </html>

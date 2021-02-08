@@ -23,10 +23,17 @@
         <button name="pick-ticket" value="1">Piocher un ticket</button>
         {% else %}
         <section>
-            <img src="/static/ticket.png" alt="Ticket de loterie">
-            <h3>Ticket pioché: {{ picked_ticket.name }}</h3>
-            <p>{{ picked_ticket.description }}</p>
-            <button name="accept-ticket" value="{{ picked_ticket.id }}">Accepter</button><button>Remettre dans la machine</button>
+            <div class="ticket">
+                <div class="ticket-box">
+                    <div class="vertical-text bottom-up">{{ '%07d' % picked_ticket.id }}</div>
+                    <div class="ticket-main">
+                        <h3>{{ picked_ticket.name }}</h3>
+                        <p>{{ picked_ticket.description | replace("\n", "<br>") | safe }}</p>
+                    </div>
+                    <div class="vertical-text">{{ '%07d' % picked_ticket.id }}</div>
+                </div>
+                <button name="accept-ticket" value="{{ picked_ticket.id }}">Accepter</button><button>Remettre dans la machine</button>
+            </div>
         </section>
         {% endif %}
         {% if not is_ticket_available %}
