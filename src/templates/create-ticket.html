@@ -7,8 +7,8 @@
     <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
+    {% include 'header.html' %}
     <h2>Créer un ticket</h2>
-    <a href="/admin" class="button">Retour à l'administration</a>
     <form action="" method="POST" class="grid-form readable">
         <label for="ticket-category">Catégorie</label>
         <select name="ticket-category" id="ticket-category">

@@ -20,7 +20,7 @@
                 {% for ticket in category.tickets %}
                 <tr>
                     <td>{{ ticket.id }}</td>
-                    <td>{{ ticket.name }}</td>
+                    <td><a href="/admin/tickets/{{ ticket.id }}">{{ ticket.name }}</a></td>
                     <td>{{ ticket.owner.first_name }}</td>
                     <td class="centered-text">{% if ticket.is_treated %} oui {% else %} non {% endif %}</td>
                     <td><button name="delete-ticket" value="{{ ticket.id }}">Supprimer</button></td>

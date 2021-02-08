@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/style.css">
+    <title>Éditer le ticket</title>
+</head>
+<body>
+    {% include 'header.html' %}
+    <section class="readable">
+        <h2>Éditer le ticket: {{ ticket.name }}</h2>
+        <form action="" method="POST" class="grid-form">
+            <label for="ticket-category">Catégorie</label>
+            <select name="ticket-category" id="ticket-category">
+                {% for category in categories %}
+                <option value="{{ category.id }}" {% if category.id == ticket.category_id %} selected {% endif %}>
+                    {{ category.name }}
+                </option>
+                {% endfor %}
+            </select>
+            <label for="ticket-name">Nom</label>
+            <input type="text" name="ticket-name" id="ticket-name" value="{{ ticket.name }}">
+            <label for="ticket-description">Description</label>
+            <textarea name="ticket-description" id="ticket-description" cols="30" rows="10">{{ ticket.description }}</textarea>
+            <label for="ticket-owner">Détenteur</label>
+            <select name="ticket-owner" id="ticket-owner">
+                <option value="">&nbsp;</option>
+                {% for user in users %}
+                <option value="{{ user.login }}" {% if user.login == ticket.user_login %} selected {% endif %}>{{ user.first_name }}</option>
+                {% endfor %}
+            </select>
+            <button name="btn-save" value="1">Enregistrer</button>
+        </form>
+    </section>
+</body>
+</html>

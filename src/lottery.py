@@ -165,6 +165,21 @@ def create_ticket(category_id: int = None):
         is_admin=True)
 
 
+@app.route('/admin/tickets/<int:ticket_id>', methods=['GET', 'POST'])
+@admins_only
+def view_ticket(ticket_id: int):
+    ticket = Ticket.query.filter_by(id=ticket_id).first()
+    all_categories = Category.query.all()
+    all_users = User.query.all()
+    if request.method == 'POST':
+        if 'btn-save' in request.form:
+            ticket.category_id = request.form['ticket-category']
+            ticket.name = request.form['ticket-name']
+            ticket.description = request.form['ticket-description']
+            database.session.commit()
+    return render_template('view-ticket.html', ticket=ticket, categories=all_categories, users=all_users, is_admin=True)
+
+
 @app.route('/admin/tickets/list', methods=['GET', 'POST'])
 @admins_only
 def list_tickets():
