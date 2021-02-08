@@ -144,6 +144,10 @@ h1 {
     color: #b57c60;
 }
 
+.ticket-main p {
+    text-align: justify;
+}
+
 .vertical-text {
     writing-mode: vertical-lr;
 }
